@@ -67,7 +67,7 @@ function ProductsContent() {
           {filtered.map((product) => (
             <ProductCard
               key={product.id}
-              product={{ ...product, image: product.image ?? getProductImage(product.category) }}
+              product={{ ...product, image: product.image ?? getProductImage(product.category, product.id) }}
             />
           ))}
         </div>

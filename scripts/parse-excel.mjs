@@ -66,13 +66,16 @@ for (const row of rows) {
     weight = weightKg >= 1 ? `${weightKg} кг` : `${Math.round(weightKg * 1000)} г`;
   }
 
+  const MARKUP = 1.5; // наценка 50%
+  const retailPrice = Math.ceil(price * MARKUP);
+
   products.push({
     id: id++,
     article,
     nameRu,
     name: nameEn,
     description: description || nameRu,
-    price,
+    price: retailPrice,
     category: currentCategory,
     weight,
     inStock,

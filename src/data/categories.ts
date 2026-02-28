@@ -58,23 +58,73 @@ export const FILTER_GROUPS = [
   { id: "Продукты", name: "Продукты", emoji: "🌶️" },
 ];
 
-// Плейсхолдер-изображения по группам (Unsplash)
-export const GROUP_IMAGES: Record<string, string> = {
-  "Дом и ароматы": "https://images.unsplash.com/photo-1602928309083-c50b4db02f5c?w=500&q=80",
-  "Гигиена": "https://images.unsplash.com/photo-1631390007683-14dbb53df61c?w=500&q=80",
-  "Уход за волосами": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80",
-  "Уход за лицом": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80",
-  "Декоративная косметика": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80",
-  "Уход за телом": "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=500&q=80",
-  "Парфюм": "https://images.unsplash.com/photo-1590156206657-aec4e8e4a3e9?w=500&q=80",
-  "Здоровье": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80",
-  "Продукты": "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=500&q=80",
+// Пул изображений на каждую группу (несколько штук для разнообразия)
+export const GROUP_IMAGE_POOLS: Record<string, string[]> = {
+  "Дом и ароматы": [
+    "https://images.unsplash.com/photo-1602928309083-c50b4db02f5c?w=500&q=80",
+    "https://images.unsplash.com/photo-1610878180933-123728745d46?w=500&q=80",
+    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80",
+    "https://images.unsplash.com/photo-1603006905393-e39a97dc0a24?w=500&q=80",
+  ],
+  "Гигиена": [
+    "https://images.unsplash.com/photo-1631390007683-14dbb53df61c?w=500&q=80",
+    "https://images.unsplash.com/photo-1591364842891-5a86e5d4e415?w=500&q=80",
+    "https://images.unsplash.com/photo-1576426863848-c21f53c60b19?w=500&q=80",
+    "https://images.unsplash.com/photo-1585421514284-efb74c2b69ba?w=500&q=80",
+  ],
+  "Уход за волосами": [
+    "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80",
+    "https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?w=500&q=80",
+    "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=500&q=80",
+    "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=500&q=80",
+  ],
+  "Уход за лицом": [
+    "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&q=80",
+    "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&q=80",
+    "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=500&q=80",
+    "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=500&q=80",
+    "https://images.unsplash.com/photo-1612817288484-6f916006741a?w=500&q=80",
+  ],
+  "Декоративная косметика": [
+    "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500&q=80",
+    "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&q=80",
+    "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80",
+    "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=500&q=80",
+  ],
+  "Уход за телом": [
+    "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=500&q=80",
+    "https://images.unsplash.com/photo-1547592180-85f173990554?w=500&q=80",
+    "https://images.unsplash.com/photo-1617897903246-719242758050?w=500&q=80",
+    "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=500&q=80",
+  ],
+  "Парфюм": [
+    "https://images.unsplash.com/photo-1590156206657-aec4e8e4a3e9?w=500&q=80",
+    "https://images.unsplash.com/photo-1563170351-be82bc888aa4?w=500&q=80",
+    "https://images.unsplash.com/photo-1541643600914-78b084683702?w=500&q=80",
+    "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500&q=80",
+  ],
+  "Здоровье": [
+    "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&q=80",
+    "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=500&q=80",
+    "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=500&q=80",
+    "https://images.unsplash.com/photo-1563213126-a4273aed2016?w=500&q=80",
+  ],
+  "Продукты": [
+    "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=500&q=80",
+    "https://images.unsplash.com/photo-1559181567-c3190958d3b3?w=500&q=80",
+    "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&q=80",
+    "https://images.unsplash.com/photo-1550436959-b984ea9c64c6?w=500&q=80",
+    "https://images.unsplash.com/photo-1596591606975-97ee5cef3a1e?w=500&q=80",
+  ],
 };
 
-export function getProductImage(category: string): string {
+// Возвращает изображение, чередуя по пулу на основе id товара
+export function getProductImage(category: string, productId?: number): string {
   const meta = CATEGORY_GROUPS[category];
   const group = meta?.group ?? "Гигиена";
-  return GROUP_IMAGES[group] ?? GROUP_IMAGES["Гигиена"];
+  const pool = GROUP_IMAGE_POOLS[group] ?? GROUP_IMAGE_POOLS["Гигиена"];
+  const idx = productId !== undefined ? productId % pool.length : 0;
+  return pool[idx];
 }
 
 export function getProductGroup(category: string): string {

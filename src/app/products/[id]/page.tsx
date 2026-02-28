@@ -20,14 +20,14 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
 
   if (!raw) notFound();
 
-  const product = { ...raw, image: raw.image ?? getProductImage(raw.category) };
+  const product = { ...raw, image: raw.image ?? getProductImage(raw.category, raw.id) };
   const group = getProductGroup(product.category);
   const categoryMeta = CATEGORY_GROUPS[product.category];
 
   const related = products
     .filter((p) => p.category === product.category && p.id !== product.id && p.inStock)
     .slice(0, 4)
-    .map((p) => ({ ...p, image: p.image ?? getProductImage(p.category) }));
+    .map((p) => ({ ...p, image: p.image ?? getProductImage(p.category, p.id) }));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">

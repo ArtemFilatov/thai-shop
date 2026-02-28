@@ -96,7 +96,7 @@ export default function Home() {
           {featured.slice(0, 4).map((product) => (
             <ProductCard
               key={product.id}
-              product={{ ...product, image: product.image ?? getProductImage(product.category) }}
+              product={{ ...product, image: product.image ?? getProductImage(product.category, product.id) }}
             />
           ))}
         </div>
