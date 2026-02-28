@@ -4,28 +4,34 @@ import { use } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { products } from "@/data/products";
+import productsRaw from "@/data/products.json";
+import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { ShoppingCartIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import ProductCard from "@/components/ProductCard";
+import { getProductImage, getProductGroup, CATEGORY_GROUPS } from "@/data/categories";
+
+const products = productsRaw as Product[];
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const product = products.find((p) => p.id === Number(id));
+  const raw = products.find((p) => p.id === Number(id));
   const { addItem } = useCart();
 
-  if (!product) notFound();
+  if (!raw) notFound();
+
+  const product = { ...raw, image: raw.image ?? getProductImage(raw.category) };
+  const group = getProductGroup(product.category);
+  const categoryMeta = CATEGORY_GROUPS[product.category];
 
   const related = products
-    .filter((p) => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
+    .filter((p) => p.category === product.category && p.id !== product.id && p.inStock)
+    .slice(0, 4)
+    .map((p) => ({ ...p, image: p.image ?? getProductImage(p.category) }));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <Link
-        href="/products"
-        className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-900 mb-8 transition-colors"
-      >
+      <Link href="/products" className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-900 mb-8 transition-colors">
         <ArrowLeftIcon className="w-4 h-4" />
         Назад в каталог
       </Link>
@@ -43,48 +49,48 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           />
           {!product.inStock && (
             <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-              <span className="text-white font-semibold bg-black/60 px-4 py-2 rounded-full">
-                Нет в наличии
-              </span>
+              <span className="text-white font-semibold bg-black/60 px-4 py-2 rounded-full">Нет в наличии</span>
             </div>
           )}
         </div>
 
         {/* Info */}
         <div>
-          <span className="inline-block bg-amber-100 text-amber-800 text-xs font-medium px-3 py-1 rounded-full mb-4">
-            {product.categoryRu}
-          </span>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">{product.nameRu}</h1>
-          <p className="text-gray-400 text-sm mb-4">{product.name}</p>
+          <div className="flex gap-2 mb-4 flex-wrap">
+            <span className="inline-block bg-amber-100 text-amber-800 text-xs font-medium px-3 py-1 rounded-full">
+              {categoryMeta?.emoji} {group}
+            </span>
+            <span className="inline-block bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1 rounded-full">
+              {product.category}
+            </span>
+          </div>
+
+          <h1 className="text-2xl font-bold text-gray-800 mb-1">{product.nameRu}</h1>
+          {product.name && <p className="text-gray-400 text-sm mb-4">{product.name}</p>}
           <p className="text-gray-600 leading-relaxed mb-6">{product.description}</p>
 
-          <div className="space-y-2 mb-8">
+          <div className="space-y-2 mb-8 text-sm">
+            <div className="flex gap-2">
+              <span className="text-gray-400 w-28">Артикул:</span>
+              <span className="text-gray-700 font-mono">{product.article}</span>
+            </div>
             {product.weight && (
-              <div className="flex gap-2 text-sm">
-                <span className="text-gray-400 w-24">Вес/объём:</span>
-                <span className="text-gray-700 font-medium">{product.weight}</span>
+              <div className="flex gap-2">
+                <span className="text-gray-400 w-28">Вес/объём:</span>
+                <span className="text-gray-700">{product.weight}</span>
               </div>
             )}
-            {product.origin && (
-              <div className="flex gap-2 text-sm">
-                <span className="text-gray-400 w-24">Происхождение:</span>
-                <span className="text-gray-700 font-medium">{product.origin}</span>
-              </div>
-            )}
-            <div className="flex gap-2 text-sm">
-              <span className="text-gray-400 w-24">Наличие:</span>
+            <div className="flex gap-2">
+              <span className="text-gray-400 w-28">Наличие:</span>
               <span className={product.inStock ? "text-green-600 font-medium" : "text-red-500 font-medium"}>
                 {product.inStock ? "В наличии" : "Нет в наличии"}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-6 mb-8">
-            <span className="text-4xl font-bold text-amber-700">{product.price} ₽</span>
-            {product.weight && (
-              <span className="text-gray-400">за {product.weight}</span>
-            )}
+          <div className="flex items-baseline gap-2 mb-8">
+            <span className="text-4xl font-bold text-amber-700">{product.price.toLocaleString()} ₽</span>
+            {product.weight && <span className="text-gray-400">/ {product.weight}</span>}
           </div>
 
           <button

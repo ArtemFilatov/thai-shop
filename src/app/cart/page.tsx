@@ -44,14 +44,14 @@ export default function CartPage() {
           {items.map((item) => (
             <div key={item.id} className="bg-white rounded-2xl p-4 border border-amber-50 shadow-sm flex gap-4">
               <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-amber-50 flex-shrink-0">
-                <Image src={item.image} alt={item.nameRu} fill className="object-cover" sizes="96px" />
+                <Image src={item.image ?? "/placeholder.png"} alt={item.nameRu} fill className="object-cover" sizes="96px" />
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <h3 className="font-semibold text-gray-800 line-clamp-1">{item.nameRu}</h3>
-                    <p className="text-gray-400 text-sm">{item.categoryRu}</p>
+                    <p className="text-gray-400 text-sm">{item.category}</p>
                   </div>
                   <button
                     onClick={() => removeItem(item.id)}

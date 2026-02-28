@@ -1,15 +1,14 @@
 export interface Product {
   id: number;
+  article: string;
   name: string;
   nameRu: string;
   description: string;
   price: number;
-  image: string;
   category: string;
-  categoryRu: string;
+  weight: string | null;
   inStock: boolean;
-  weight?: string;
-  origin?: string;
+  image: string | null;
 }
 
 export interface CartItem extends Product {
